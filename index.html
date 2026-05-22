@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DLMTP_LinkPlay SDK 文档</title>
+<style>
+:root{--sidebar-width:260px;--bg:#fafbfc;--sb-bg:#1b1f2a;--sb-text:#c8ccd4;--sb-hover:#2d3344;--sb-active:#3b82f6;--text:#1f2937;--tl:#6b7280;--bd:#e5e7eb;--cb:#f3f4f6;--ct:#dc2626;--link:#3b82f6;--ts:#f9fafb;--hd:#111827;--bbg:#eff6ff;--bbb:#3b82f6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",Roboto,sans-serif;line-height:1.7;color:var(--text);background:var(--bg);display:flex;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;width:var(--sidebar-width);height:100vh;background:var(--sb-bg);color:var(--sb-text);overflow-y:auto;z-index:100;display:flex;flex-direction:column}
+.sb-hd{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,0.08);font-size:15px;font-weight:600;color:#f1f5f9}
+.sb-hd small{display:block;font-weight:400;font-size:12px;color:#94a3b8;margin-top:4px}
+.sb-nav{flex:1;padding:8px 0;list-style:none}
+.sb-nav li a{display:block;padding:8px 20px;color:var(--sb-text);text-decoration:none;font-size:13.5px;border-left:3px solid transparent;transition:all .15s}
+.sb-nav li a:hover{background:var(--sb-hover);color:#f1f5f9}
+.sb-nav li a.active{background:rgba(59,130,246,.15);color:#60a5fa;border-left-color:var(--sb-active)}
+.sb-ft{padding:12px 20px;border-top:1px solid rgba(255,255,255,0.08);font-size:12px;color:#64748b}
+.main{margin-left:var(--sidebar-width);flex:1;min-width:0}
+.content{max-width:860px;margin:0 auto;padding:48px 40px 40px;width:100%}
+h1{font-size:28px;font-weight:700;color:var(--hd);margin-bottom:4px}
+h2{font-size:20px;font-weight:600;color:var(--hd);margin-top:40px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+h3{font-size:16px;font-weight:600;color:var(--hd);margin-top:28px;margin-bottom:10px}
+h4{font-size:14px;font-weight:600;color:var(--hd);margin-top:20px;margin-bottom:8px}
+p{margin-bottom:12px;font-size:15px}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+code{background:var(--cb);padding:2px 6px;border-radius:4px;font-family:"JetBrains Mono",Consolas,monospace;font-size:13px;color:var(--ct)}
+pre{background:#1e293b;color:#e2e8f0;padding:18px 20px;border-radius:8px;overflow-x:auto;margin:14px 0;font-size:13px;line-height:1.6}
+pre code{background:none;color:inherit;padding:0;font-size:inherit}
+table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:14px}
+th,td{border:1px solid var(--bd);padding:10px 14px;text-align:left}
+th{background:#f8fafc;font-weight:600;color:#374151;font-size:13px}
+tr:nth-child(even) td{background:var(--ts)}
+blockquote{background:var(--bbg);border-left:4px solid var(--bbb);padding:12px 18px;margin:14px 0;border-radius:0 6px 6px 0;color:#374151;font-size:14px}
+blockquote p{margin:0}
+hr{border:none;border-top:1px solid var(--bd);margin:28px 0}
+.section{scroll-margin-top:30px}
+.tag{display:inline-block;background:#e0e7ff;color:#3730a3;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;margin-bottom:10px}
+ul,ol{margin:10px 0 14px 24px;font-size:15px}
+li{margin-bottom:4px}
+.site-footer{margin-top:48px;padding:20px 0;border-top:1px solid var(--bd);text-align:center;font-size:13px;color:var(--tl)}
+.site-footer a{color:var(--link);font-weight:500}
+.sidebar::-webkit-scrollbar{width:5px}
+.sidebar::-webkit-scrollbar-track{background:transparent}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+.arch{background:#f8fafc;border:1px solid var(--bd);border-radius:8px;padding:20px;margin:14px 0;font-family:"JetBrains Mono",Consolas,monospace;font-size:12px;line-height:1.6;white-space:pre;overflow-x:auto;color:#334155}
+.ft-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;margin:14px 0}
+.ft-item{display:flex;align-items:flex-start;gap:8px;font-size:14px;padding:6px 0}
+.ft-item .icon{color:#22c55e;font-weight:700}
+@media(max-width:768px){.sidebar{width:220px}.main{margin-left:220px}.content{padding:24px 20px}}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="sb-hd">DLMTP_LinkPlay SDK<small>Unity 联机客户端文档 · v2.0</small></div>
+<ul class="sb-nav">
+<li><a href="#overview" class="active">1. 概述</a></li>
+<li><a href="#file-structure">2. 文件结构</a></li>
+<li><a href="#enums">3. 枚举与常量</a></li>
+<li><a href="#rpc-attribute">4. RPC 属性</a></li>
+<li><a href="#data-models">5. 数据模型</a></li>
+<li><a href="#client">6. 核心客户端 API</a></li>
+<li><a href="#message-handler">7. 消息处理器</a></li>
+<li><a href="#protocol">8. 协议格式</a></li>
+<li><a href="#examples">9. 完整使用示例</a></li>
+<li><a href="#faq">10. 常见问题</a></li>
+</ul>
+<div class="sb-ft"><a href="https://github.com/your-repo/DLMTP_LinkPlay" target="_blank">GitHub →</a></div>
+</aside>
+<div class="main"><div class="content">
+<!-- ====== 1. 概述 ====== -->
+<div class="section" id="overview">
+<span class="tag">命名空间: DLMTP_LinkPlay</span>
+<h1>DLMTP_LinkPlay SDK 文档</h1>
+<p><strong>DLMTP_LinkPlay</strong> 是一个基于 WebSocket 的 Unity 联机客户端 SDK，提供完整的房间管理和 RPC 远程调用功能。</p>
+<p style="color:var(--tl);font-size:13px">核心依赖：UnityEngine、System.Net.WebSockets | 文档版本：v2.0 | 最后更新：2026-05-17</p>
+<h3>功能特性</h3>
+<div class="ft-grid">
+<div class="ft-item"><span class="icon">V</span> WebSocket 连接管理 — 基于 ClientWebSocket 的异步连接</div>
+<div class="ft-item"><span class="icon">V</span> 大厅 + 房间系统 — 支持创建/加入/离开房间，密码保护</div>
+<div class="ft-item"><span class="icon">V</span> RPC 远程调用 — 4 种广播目标：全部、房主、非房主、除自己外</div>
+<div class="ft-item"><span class="icon">V</span> 事件回调系统 — 全异步操作均有对应事件通知</div>
+<div class="ft-item"><span class="icon">V</span> 自动心跳保活 — 可配置间隔与超时时间</div>
+<div class="ft-item"><span class="icon">V</span> 断线自动重连 — 可配置重连次数与间隔</div>
+<div class="ft-item"><span class="icon">V</span> 自定义房间/玩家属性 — 支持 Dictionary&lt;string, object&gt; 灵活扩展</div>
+<div class="ft-item"><span class="icon">V</span> 跨平台设备信息 — 自动收集平台、设备型号、OS 信息</div>
+</div>
+<h3>架构概览</h3>
+<div class="arch">┌─────────────────────────────────────────────────────┐
+│                     Unity 客户端                      │
+│                                                      │
+│  LinkPlayClient (MonoBehaviour)                      │
+│  ├── 连接管理 (ConnectAsync / DisconnectAsync)       │
+│  ├── 大厅管理 (LeaveLobbyAsync)                     │
+│  ├── 房间管理 (CreateRoom / JoinRoom / LeaveRoom)   │
+│  ├── 玩家信息 (UpdatePlayerInfoAsync)               │
+│  ├── 游戏消息 (SendGameMessageAsync)                │
+│  ├── RPC 系统 (InvokeRPCAsync)                      │
+│  └── 心跳/重连 (自动)                               │
+│         │                                            │
+│         ▼ WebSocket                                  │
+│  ┌──────────────────────────────────────┐            │
+│  │  DLMTP_LinkPlay_Socket_Server (C#)  │            │
+│  │  (独立控制台应用)                    │            │
+│  └──────────────────────────────────────┘            │
+└─────────────────────────────────────────────────────┘</div>
+</div>
+
+<hr>
+
+<!-- ====== 2. 文件结构 ====== -->
+<div class="section" id="file-structure">
+<h2>2. 文件结构</h2>
+<pre><code>Assets/Scripts/DLMTP_LinkPlay/
+├── CoreSDK/
+│   ├── LinkPlayClient.cs          # 核心客户端类（MonoBehaviour）
+│   ├── LinkPlayEnums.cs           # 枚举与常量定义
+│   ├── LinkPlayMessageHandler.cs  # 消息处理器（内部）
+│   ├── LinkPlayModels.cs          # 数据模型 + MiniJson 工具
+│   └── LinkPlayRPCAttribute.cs    # RPC 标记特性
+└── README.md                      # 快速入门文档</code></pre>
+</div>
+
+<hr>
+
+<!-- ====== 3. 枚举与常量 ====== -->
+<div class="section" id="enums">
+<h2>3. 枚举与常量</h2>
+
+<h3>3.1 ConnectionState — 连接状态</h3>
+<table><thead><tr><th>值</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>Disconnected</code></td><td>未连接</td></tr>
+<tr><td><code>Connecting</code></td><td>正在连接</td></tr>
+<tr><td><code>Connected</code></td><td>已连接</td></tr>
+<tr><td><code>Reconnecting</code></td><td>正在重连</td></tr>
+<tr><td><code>Disconnecting</code></td><td>正在断开</td></tr>
+</tbody></table>
+
+<h3>3.2 RPCTargetType — RPC 广播目标</h3>
+<table><thead><tr><th>值</th><th>说明</th><th>典型场景</th></tr></thead><tbody>
+<tr><td><code>AllPlayersInRoom</code></td><td>房间内所有玩家（包括自己）</td><td>游戏开始、倒计时、全局事件</td></tr>
+<tr><td><code>RoomOwner</code></td><td>仅房主</td><td>报告状态、请求权限</td></tr>
+<tr><td><code>NonOwnerPlayers</code></td><td>所有非房主玩家</td><td>游戏状态同步、通知</td></tr>
+<tr><td><code>Others</code></td><td>除自己外的其他玩家</td><td>玩家动作同步（移动、攻击等）</td></tr>
+</tbody></table>
+
+<h3>3.3 ServerMessageType — 消息类型常量</h3>
+<table><thead><tr><th>常量名</th><th>值</th><th>方向</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>Ping</code></td><td><code>"ping"</code></td><td>客户端→服务端</td><td>心跳请求</td></tr>
+<tr><td><code>Pong</code></td><td><code>"pong"</code></td><td>服务端→客户端</td><td>心跳响应</td></tr>
+<tr><td><code>JoinLobby</code></td><td><code>"join_lobby"</code></td><td>客户端→服务端</td><td>加入大厅</td></tr>
+<tr><td><code>LeaveLobby</code></td><td><code>"leave_lobby"</code></td><td>客户端→服务端</td><td>离开大厅</td></tr>
+<tr><td><code>CreateRoom</code></td><td><code>"create_room"</code></td><td>客户端→服务端</td><td>创建房间</td></tr>
+<tr><td><code>JoinRoom</code></td><td><code>"join_room"</code></td><td>客户端→服务端</td><td>加入房间</td></tr>
+<tr><td><code>LeaveRoom</code></td><td><code>"leave_room"</code></td><td>客户端→服务端</td><td>离开房间</td></tr>
+<tr><td><code>GetRoomList</code></td><td><code>"get_room_list"</code></td><td>客户端→服务端</td><td>获取房间列表</td></tr>
+<tr><td><code>GetCurrentRoomInfo</code></td><td><code>"get_current_room_info"</code></td><td>客户端→服务端</td><td>获取当前房间详情</td></tr>
+<tr><td><code>SetCurrentRoomInfo</code></td><td><code>"set_current_room_info"</code></td><td>客户端→服务端</td><td>更新房间属性（房主）</td></tr>
+<tr><td><code>SetPlayerInfo</code></td><td><code>"set_player_info"</code></td><td>客户端→服务端</td><td>更新玩家信息</td></tr>
+<tr><td><code>SendGameMessage</code></td><td><code>"send_game_message"</code></td><td>客户端→服务端</td><td>发送自定义游戏消息</td></tr>
+<tr><td><code>Broadcast</code></td><td><code>"broadcast"</code></td><td>服务端→客户端</td><td>服务端主动广播推送</td></tr>
+</tbody></table>
+
+<h3>3.4 ServerErrorCode — 错误码</h3>
+<table><thead><tr><th>常量名</th><th>值</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>InvalidRequest</code></td><td><code>"INVALID_REQUEST"</code></td><td>无效请求格式</td></tr>
+<tr><td><code>AuthFailed</code></td><td><code>"AUTH_FAILED"</code></td><td>认证失败（密钥错误）</td></tr>
+<tr><td><code>RoomNotFound</code></td><td><code>"ROOM_NOT_FOUND"</code></td><td>房间不存在</td></tr>
+<tr><td><code>RoomFull</code></td><td><code>"ROOM_FULL"</code></td><td>房间已满</td></tr>
+<tr><td><code>WrongPassword</code></td><td><code>"WRONG_PASSWORD"</code></td><td>房间密码错误</td></tr>
+<tr><td><code>AlreadyInRoom</code></td><td><code>"ALREADY_IN_ROOM"</code></td><td>已在房间中</td></tr>
+<tr><td><code>NotInRoom</code></td><td><code>"NOT_IN_ROOM"</code></td><td>不在房间中</td></tr>
+<tr><td><code>NotRoomOwner</code></td><td><code>"NOT_ROOM_OWNER"</code></td><td>不是房主（无操作权限）</td></tr>
+<tr><td><code>PlayerNotFound</code></td><td><code>"PLAYER_NOT_FOUND"</code></td><td>玩家不存在</td></tr>
+<tr><td><code>ServerError</code></td><td><code>"SERVER_ERROR"</code></td><td>服务端内部错误</td></tr>
+</tbody></table>
+
+<h3>3.5 BroadcastEvent — 广播事件常量</h3>
+<table><thead><tr><th>常量名</th><th>值</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>PlayerJoined</code></td><td><code>"player_joined"</code></td><td>有玩家加入房间</td></tr>
+<tr><td><code>PlayerLeft</code></td><td><code>"player_left"</code></td><td>有玩家离开房间</td></tr>
+<tr><td><code>RoomPropertiesUpdated</code></td><td><code>"room_properties_updated"</code></td><td>房间属性变更</td></tr>
+<tr><td><code>PlayerPropertiesUpdated</code></td><td><code>"player_properties_updated"</code></td><td>玩家属性变更</td></tr>
+<tr><td><code>GameStart</code></td><td><code>"game_start"</code></td><td>游戏开始（预留）</td></tr>
+<tr><td><code>GameEnd</code></td><td><code>"game_end"</code></td><td>游戏结束（预留）</td></tr>
+</tbody></table>
+</div>
+
+<hr>
+
+<!-- ====== 4. RPC 属性 ====== -->
+<div class="section" id="rpc-attribute">
+<h2>4. RPC 属性 (LinkPlayRPC)</h2>
+<p><code>[LinkPlayRPC]</code> 是一个方法级别的 Attribute，用于标记可被远程调用的方法。</p>
+<h3>定义</h3>
+<pre><code>[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+public class LinkPlayRPC : Attribute</code></pre>
+<h3>属性</h3>
+<table><thead><tr><th>属性名</th><th>类型</th><th>必填</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>Name</code></td><td><code>string</code></td><td>否</td><td>自定义 RPC 方法名。不设置时默认使用 C# 方法名。</td></tr>
+<tr><td><code>Description</code></td><td><code>string</code></td><td>否</td><td>RPC 方法描述，仅用于文档说明。</td></tr>
+</tbody></table>
+<h3>使用规则</h3>
+<ul>
+<li>可标记在 <code>public</code> / <code>private</code> / <code>protected</code> 方法上</li>
+<li>方法必须位于继承自 <code>MonoBehaviour</code> 的类中</li>
+<li>方法所在的 <code>GameObject</code> 必须为 <strong>active in hierarchy</strong></li>
+<li>参数支持：<code>int</code>、<code>float</code>、<code>double</code>、<code>long</code>、<code>bool</code>、<code>string</code>、<code>Dictionary&lt;string, object&gt;</code></li>
+<li>不支持：<code>GameObject</code>、<code>Transform</code> 等 Unity 特有类型</li>
+</ul>
+</div>
+
+<hr>
+
+<!-- ====== 5. 数据模型 ====== -->
+<div class="section" id="data-models">
+<h2>5. 数据模型</h2>
+
+<h3>5.1 网络协议模型</h3>
+
+<h4>ServerRequest — 客户端→服务端请求</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>type</code></td><td><code>string</code></td><td>请求类型（如 "join_lobby"）</td></tr>
+<tr><td><code>data</code></td><td><code>string</code></td><td>JSON 对象字符串，承载请求参数</td></tr>
+<tr><td><code>timestamp</code></td><td><code>long</code></td><td>Unix 毫秒时间戳</td></tr>
+</tbody></table>
+<p>构造方法：<code>ServerRequest(string typeStr, object dataObj = null)</code>，方法：<code>ToJson() → string</code></p>
+
+<h4>ServerResponse — 服务端→客户端响应</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>success</code></td><td><code>bool</code></td><td>是否成功</td></tr>
+<tr><td><code>type</code></td><td><code>string</code></td><td>响应类型</td></tr>
+<tr><td><code>data</code></td><td><code>string</code></td><td>JSON 响应数据（可能为 null）</td></tr>
+<tr><td><code>error</code></td><td><code>ServerError</code></td><td>错误信息（success=false 时有效）</td></tr>
+<tr><td><code>timestamp</code></td><td><code>long</code></td><td>Unix 毫秒时间戳</td></tr>
+</tbody></table>
+<p>方法：<code>GetData&lt;T&gt;()</code> 反序列化 data；<code>FromJson(string) → ServerResponse</code> 静态解析</p>
+
+<h4>ServerError — 错误信息</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>code</code></td><td><code>string</code></td><td>错误码（如 "ROOM_NOT_FOUND"）</td></tr>
+<tr><td><code>message</code></td><td><code>string</code></td><td>人类可读的错误描述</td></tr>
+</tbody></table>
+
+<h4>ServerBroadcast — 服务端广播推送</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>type</code></td><td><code>string</code></td><td>固定为 "broadcast"</td></tr>
+<tr><td><code>event</code></td><td><code>string</code></td><td>事件名（如 "player_joined"）</td></tr>
+<tr><td><code>roomId</code></td><td><code>string</code></td><td>房间标识</td></tr>
+<tr><td><code>data</code></td><td><code>string</code></td><td>事件数据 JSON 字符串</td></tr>
+</tbody></table>
+
+<h3>5.2 连接/大厅模型</h3>
+<h4>JoinLobbyData</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>secret</code></td><td><code>string</code></td><td>服务器密钥</td></tr>
+<tr><td><code>playerName</code></td><td><code>string</code></td><td>玩家显示名称</td></tr>
+<tr><td><code>playerId</code></td><td><code>string</code></td><td>玩家唯一 ID（UUID）</td></tr>
+<tr><td><code>playerDevicePlatform</code></td><td><code>string</code></td><td>运行平台</td></tr>
+<tr><td><code>playerDeviceModel</code></td><td><code>string</code></td><td>设备型号</td></tr>
+<tr><td><code>playerDeviceOS</code></td><td><code>string</code></td><td>操作系统版本</td></tr>
+</tbody></table>
+<h4>JoinLobbyResponse</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>playerId</code></td><td><code>string</code></td><td>服务端确认的玩家 ID</td></tr>
+</tbody></table>
+
+<h3>5.3 房间模型</h3>
+<h4>CreateRoomData</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>roomName</code></td><td><code>string</code></td><td>房间名称</td></tr>
+<tr><td><code>roomMaxPlayer</code></td><td><code>int</code></td><td>最大玩家数 (2~50)</td></tr>
+<tr><td><code>roomHasPassword</code></td><td><code>bool</code></td><td>是否有密码</td></tr>
+<tr><td><code>roomPassword</code></td><td><code>string</code></td><td>密码</td></tr>
+<tr><td><code>roomProperties</code></td><td><code>string</code></td><td>自定义属性 JSON</td></tr>
+</tbody></table>
+<h4>RoomCreatedResponse</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>roomName</code></td><td><code>string</code></td><td>房间名称</td></tr>
+<tr><td><code>roomMaxPlayer</code></td><td><code>int</code></td><td>最大玩家数</td></tr>
+<tr><td><code>currentPlayerCount</code></td><td><code>int</code></td><td>当前玩家数</td></tr>
+<tr><td><code>ownerPlayerId</code></td><td><code>string</code></td><td>房主玩家 ID</td></tr>
+</tbody></table>
+<h4>JoinRoomData</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>roomName</code></td><td><code>string</code></td><td>要加入的房间名称</td></tr>
+<tr><td><code>password</code></td><td><code>string</code></td><td>密码（无密码传空字符串）</td></tr>
+</tbody></table>
+<h4>RoomListItem</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>roomName</code></td><td><code>string</code></td><td>房间名称</td></tr>
+<tr><td><code>currentPlayerCount</code></td><td><code>int</code></td><td>当前玩家数</td></tr>
+<tr><td><code>roomMaxPlayer</code></td><td><code>int</code></td><td>最大玩家数</td></tr>
+<tr><td><code>roomHasPassword</code></td><td><code>bool</code></td><td>是否有密码</td></tr>
+<tr><td><code>roomProperties</code></td><td><code>string</code></td><td>自定义属性 (JSON)</td></tr>
+</tbody></table>
+<h4>RoomListResponse</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>rooms</code></td><td><code>List&lt;RoomListItem&gt;</code></td><td>房间列表</td></tr>
+</tbody></table>
+<h4>RoomDetailInfo</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>roomName</code></td><td><code>string</code></td><td>房间名称</td></tr>
+<tr><td><code>roomMaxPlayer</code></td><td><code>int</code></td><td>最大玩家数</td></tr>
+<tr><td><code>roomHasPassword</code></td><td><code>bool</code></td><td>是否有密码</td></tr>
+<tr><td><code>roomProperties</code></td><td><code>string</code></td><td>自定义属性</td></tr>
+<tr><td><code>ownerPlayerId</code></td><td><code>string</code></td><td>房主玩家 ID</td></tr>
+<tr><td><code>ownerPlayerName</code></td><td><code>string</code></td><td>房主玩家名称</td></tr>
+<tr><td><code>players</code></td><td><code>List&lt;PlayerDetailInfo&gt;</code></td><td>房间内所有玩家信息</td></tr>
+</tbody></table>
+<h4>SetRoomInfoData</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>roomProperties</code></td><td><code>string</code></td><td>JSON 对象字符串</td></tr>
+</tbody></table>
+
+<h3>5.4 玩家模型</h3>
+<h4>PlayerDetailInfo</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>playerId</code></td><td><code>string</code></td><td>玩家唯一 ID</td></tr>
+<tr><td><code>playerName</code></td><td><code>string</code></td><td>玩家显示名称</td></tr>
+<tr><td><code>playerDevicePlatform</code></td><td><code>string</code></td><td>运行平台</td></tr>
+<tr><td><code>playerDeviceModel</code></td><td><code>string</code></td><td>设备型号</td></tr>
+<tr><td><code>playerDeviceOS</code></td><td><code>string</code></td><td>操作系统版本</td></tr>
+<tr><td><code>playerProperties</code></td><td><code>string</code></td><td>自定义玩家属性</td></tr>
+</tbody></table>
+<h4>SetPlayerInfoData</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>playerName</code></td><td><code>string</code></td><td>新玩家名称</td></tr>
+<tr><td><code>playerProperties</code></td><td><code>string</code></td><td>自定义属性</td></tr>
+</tbody></table>
+
+<h3>5.5 广播与游戏消息模型</h3>
+<h4>GameMessageData</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>targetPlayers</code></td><td><code>List&lt;string&gt;</code></td><td>目标玩家 ID 列表；null/空则广播所有人</td></tr>
+<tr><td><code>messageType</code></td><td><code>string</code></td><td>自定义消息类型（如 "rpc"）</td></tr>
+<tr><td><code>payload</code></td><td><code>string</code></td><td>自定义数据 JSON 字符串</td></tr>
+</tbody></table>
+<h4>RPCPayload</h4>
+<table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>methodName</code></td><td><code>string</code></td><td>要调用的 RPC 方法名</td></tr>
+<tr><td><code>parameters</code></td><td><code>string</code></td><td>参数数组的 JSON 字符串</td></tr>
+<tr><td><code>targetType</code></td><td><code>int</code></td><td>RPCTargetType 枚举值</td></tr>
+<tr><td><code>senderId</code></td><td><code>string</code></td><td>发送者玩家 ID</td></tr>
+<tr><td><code>senderName</code></td><td><code>string</code></td><td>发送者玩家名称</td></tr>
+</tbody></table>
+
+<h3>5.6 MiniJson 工具</h3>
+<p>简易 JSON 序列化/反序列化工具类，用于处理 <code>Dictionary&lt;string, object&gt;</code> 和数组。</p>
+<table><thead><tr><th>方法</th><th>返回类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>Serialize(Dictionary)</code></td><td><code>string</code></td><td>字典 → JSON 字符串</td></tr>
+<tr><td><code>SerializeArray(object[])</code></td><td><code>string</code></td><td>数组 → JSON 字符串</td></tr>
+<tr><td><code>Deserialize(string)</code></td><td><code>Dictionary</code></td><td>JSON → 字典（仅扁平 key:value）</td></tr>
+<tr><td><code>DeserializeArray(string)</code></td><td><code>List&lt;object&gt;</code></td><td>JSON → 列表</td></tr>
+</tbody></table>
+<p style="color:var(--tl);font-size:13px">限制：反序列化仅支持扁平的 key:value 结构，不支持嵌套对象。</p>
+</div>
+
+<hr>
+
+<!-- ====== 6. 核心客户端 API ====== -->
+<div class="section" id="client">
+<h2>6. 核心客户端 (LinkPlayClient)</h2>
+<p><code>LinkPlayClient</code> 是 SDK 的核心类，继承自 <code>MonoBehaviour</code>，挂载到任何 GameObject 上即可使用。</p>
+
+<h3>6.1 序列化字段（Inspector 可配置）</h3>
+<table><thead><tr><th>字段</th><th>类型</th><th>默认值</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>ServerUrl</code></td><td><code>string</code></td><td>从 GameInfo 读取</td><td>WebSocket 服务器地址</td></tr>
+<tr><td><code>ServerSecret</code></td><td><code>string</code></td><td><code>"your_secret_key_here"</code></td><td>服务器密钥</td></tr>
+<tr><td><code>PlayerName</code></td><td><code>string</code></td><td><code>"Player"</code></td><td>玩家显示名称</td></tr>
+<tr><td><code>HeartbeatInterval</code></td><td><code>float</code></td><td><code>30f</code></td><td>心跳发送间隔（秒）</td></tr>
+<tr><td><code>HeartbeatTimeout</code></td><td><code>float</code></td><td><code>60f</code></td><td>心跳超时时间（秒）</td></tr>
+<tr><td><code>AutoReconnect</code></td><td><code>bool</code></td><td><code>true</code></td><td>是否启用自动重连</td></tr>
+<tr><td><code>MaxReconnectAttempts</code></td><td><code>int</code></td><td><code>5</code></td><td>最大重连次数（-1 为无限）</td></tr>
+<tr><td><code>ReconnectDelay</code></td><td><code>float</code></td><td><code>3f</code></td><td>重连间隔（秒）</td></tr>
+</tbody></table>
+
+<h3>6.2 运行时属性</h3>
+<table><thead><tr><th>属性</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>IsConnected</code></td><td><code>bool</code></td><td>是否已连接</td></tr>
+<tr><td><code>IsInLobby</code></td><td><code>bool</code></td><td>是否在大厅中</td></tr>
+<tr><td><code>IsInRoom</code></td><td><code>bool</code></td><td>是否在房间中</td></tr>
+<tr><td><code>CurrentRoomName</code></td><td><code>string</code></td><td>当前所在房间名称</td></tr>
+<tr><td><code>PlayerId</code></td><td><code>string</code></td><td>玩家唯一标识（UUID）</td></tr>
+<tr><td><code>CurrentState</code></td><td><code>ConnectionState</code></td><td>当前连接状态</td></tr>
+</tbody></table>
+
+<h3>6.3 事件回调</h3>
+<p>所有事件均为 <code>Action</code> / <code>Action&lt;T&gt;</code> 委托，在主线程触发。</p>
+
+<h4>连接事件</h4>
+<table><thead><tr><th>事件</th><th>签名</th><th>触发时机</th></tr></thead><tbody>
+<tr><td><code>OnConnected</code></td><td><code>Action</code></td><td>连接建立且加入大厅后</td></tr>
+<tr><td><code>OnDisconnected</code></td><td><code>Action</code></td><td>连接断开（非主动断开）</td></tr>
+<tr><td><code>OnError</code></td><td><code>Action&lt;string&gt;</code></td><td>发生任何错误</td></tr>
+</tbody></table>
+
+<h4>大厅事件</h4>
+<table><thead><tr><th>事件</th><th>签名</th><th>触发时机</th></tr></thead><tbody>
+<tr><td><code>OnJoinedLobby</code></td><td><code>Action</code></td><td>成功加入大厅</td></tr>
+<tr><td><code>OnLeftLobby</code></td><td><code>Action</code></td><td>离开大厅</td></tr>
+</tbody></table>
+
+<h4>房间事件</h4>
+<table><thead><tr><th>事件</th><th>签名</th><th>触发时机</th></tr></thead><tbody>
+<tr><td><code>OnRoomCreated</code></td><td><code>Action&lt;string&gt;</code></td><td>房间创建成功</td></tr>
+<tr><td><code>OnRoomJoined</code></td><td><code>Action&lt;string&gt;</code></td><td>成功加入房间</td></tr>
+<tr><td><code>OnRoomLeft</code></td><td><code>Action&lt;string&gt;</code></td><td>离开房间</td></tr>
+<tr><td><code>OnRoomListUpdated</code></td><td><code>Action&lt;List&lt;RoomListItem&gt;&gt;</code></td><td>房间列表刷新</td></tr>
+<tr><td><code>OnRoomInfoUpdated</code></td><td><code>Action</code></td><td>房间属性更新成功</td></tr>
+<tr><td><code>OnRoomClosed</code></td><td><code>Action</code></td><td>房间被关闭</td></tr>
+<tr><td><code>OnRoomDetailInfoReceived</code></td><td><code>Action&lt;RoomDetailInfo&gt;</code></td><td>收到房间详细信息</td></tr>
+</tbody></table>
+
+<h4>玩家 / 广播事件</h4>
+<table><thead><tr><th>事件</th><th>签名</th><th>触发时机</th></tr></thead><tbody>
+<tr><td><code>OnPlayerInfoUpdated</code></td><td><code>Action</code></td><td>玩家信息更新成功</td></tr>
+<tr><td><code>OnBroadcastReceived</code></td><td><code>Action&lt;string, object&gt;</code></td><td>收到服务端广播推送</td></tr>
+<tr><td><code>OnRPCReceived</code></td><td><code>Action&lt;string, string&gt;</code></td><td>收到 RPC 调用</td></tr>
+</tbody></table>
+
+<h4>广播事件常见 event 值</h4>
+<table><thead><tr><th>事件名</th><th>数据内容</th></tr></thead><tbody>
+<tr><td><code>"player_joined"</code></td><td>包含 playerId、playerName 等的字典</td></tr>
+<tr><td><code>"player_left"</code></td><td>包含 playerId、playerName 等的字典</td></tr>
+<tr><td><code>"room_properties_updated"</code></td><td>房间新属性</td></tr>
+<tr><td><code>"player_properties_updated"</code></td><td>玩家新属性</td></tr>
+</tbody></table>
+
+<h3>6.4 公共方法</h3>
+<p>所有 async 方法均可 await，返回 <code>bool</code> 表示操作是否成功发送。</p>
+
+<h4>ConnectAsync</h4>
+<pre><code>public async Task&lt;bool&gt; ConnectAsync()</code></pre>
+<p>连接到 WebSocket 服务器并自动加入大厅。连接后自动发送 join_lobby 请求。若已连接则直接返回 true。触发事件：成功 → OnConnected + OnJoinedLobby；失败 → OnError。</p>
+
+<h4>DisconnectAsync</h4>
+<pre><code>public async Task&lt;bool&gt; DisconnectAsync()</code></pre>
+<p>主动断开连接。断开前会自动离开当前房间，然后发送 leave_lobby 请求。因为是主动断开，不触发 OnDisconnected 事件。</p>
+
+<h4>LeaveLobbyAsync</h4>
+<pre><code>public async Task&lt;bool&gt; LeaveLobbyAsync()</code></pre>
+<p>离开大厅。前提：IsInLobby 必须为 true。</p>
+
+<h4>CreateRoomAsync</h4>
+<pre><code>public async Task&lt;bool&gt; CreateRoomAsync(
+    string roomName, int maxPlayers = 10,
+    bool hasPassword = false, string password = "",
+    Dictionary&lt;string, object&gt; properties = null)</code></pre>
+<p>创建房间。前提：已连接且在大厅中，不在房间中。maxPlayers Clamp 范围 2~50。触发事件：OnRoomCreated。</p>
+
+<h4>JoinRoomAsync</h4>
+<pre><code>public async Task&lt;bool&gt; JoinRoomAsync(string roomName, string password = "")</code></pre>
+<p>加入房间。前提：已连接且在大厅中，不在房间中。触发事件：OnRoomJoined。</p>
+
+<h4>LeaveRoomAsync</h4>
+<pre><code>public async Task&lt;bool&gt; LeaveRoomAsync()</code></pre>
+<p>离开当前房间。前提：必须在房间中。触发事件：OnRoomLeft。</p>
+
+<h4>GetRoomListAsync</h4>
+<pre><code>public async Task&lt;bool&gt; GetRoomListAsync()</code></pre>
+<p>获取房间列表。触发事件：OnRoomListUpdated，参数为 List&lt;RoomListItem&gt;。</p>
+
+<h4>GetCurrentRoomInfoAsync</h4>
+<pre><code>public async Task&lt;bool&gt; GetCurrentRoomInfoAsync()</code></pre>
+<p>获取当前房间详情（含玩家列表）。触发事件：OnRoomDetailInfoReceived。</p>
+
+<h4>UpdateRoomInfoAsync</h4>
+<pre><code>public async Task&lt;bool&gt; UpdateRoomInfoAsync(Dictionary&lt;string, object&gt; properties)</code></pre>
+<p>更新房间属性（仅房主可用）。触发事件：OnRoomInfoUpdated。</p>
+
+<h4>UpdatePlayerInfoAsync</h4>
+<pre><code>public async Task&lt;bool&gt; UpdatePlayerInfoAsync(
+    string newPlayerName = null,
+    Dictionary&lt;string, object&gt; properties = null)</code></pre>
+<p>更新玩家信息。如传入新名称，PlayerName 属性会同步更新。触发事件：OnPlayerInfoUpdated。</p>
+
+<h4>SendGameMessageAsync</h4>
+<pre><code>public async Task&lt;bool&gt; SendGameMessageAsync(
+    string messageType, object payload,
+    List&lt;string&gt; targetPlayers = null)</code></pre>
+<p>向房间内玩家发送自定义游戏消息。targetPlayers 为 null 则广播给所有人。触发事件：目标玩家收到 OnBroadcastReceived。</p>
+
+<h4>InvokeRPCAsync</h4>
+<pre><code>public async Task&lt;bool&gt; InvokeRPCAsync(
+    string methodName, object[] parameters = null,
+    RPCTargetType targetType = RPCTargetType.Others)</code></pre>
+<p>调用远程过程（RPC）。封装 SendGameMessageAsync，以 messageType = "rpc" 发送。触发事件：目标玩家收到 OnRPCReceived，并自动派发到 [LinkPlayRPC] 方法。</p>
+
+<h3>6.5 内部方法 (internal)</h3>
+<table><thead><tr><th>方法</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>SendRequest(string type, object dataObj)</code></td><td>发送请求到服务端</td></tr>
+<tr><td><code>DispatchRPCMethod(string name, string json)</code></td><td>派发 RPC 到本地 [LinkPlayRPC] 方法</td></tr>
+<tr><td><code>InvokeOnMainThread(Action)</code></td><td>将操作排入主线程执行队列</td></tr>
+<tr><td><code>SetConnectionState(ConnectionState)</code></td><td>设置连接状态</td></tr>
+<tr><td><code>SetInLobby(bool)</code></td><td>设置大厅状态</td></tr>
+<tr><td><code>SetInRoom(bool)</code></td><td>设置房间状态</td></tr>
+<tr><td><code>SetRoomName(string)</code></td><td>设置当前房间名称</td></tr>
+<tr><td><code>UpdateLastHeartbeatAck()</code></td><td>更新心跳确认时间</td></tr>
+</tbody></table>
+</div>
+
+<hr>
+
+<!-- ====== 7. 消息处理器 ====== -->
+<div class="section" id="message-handler">
+<h2>7. 消息处理器 (LinkPlayMessageHandler)</h2>
+<p><code>LinkPlayMessageHandler</code> 是 internal 类，由 LinkPlayClient 内部使用，负责解析服务端返回的 JSON 消息并派发事件。</p>
+
+<h3>消息解析流程</h3>
+<div class="arch">原始消息
+    │
+    ├── 尝试解析为 ServerResponse（标准响应）
+    │   ├── success=false → 触发 OnError
+    │   └── success=true  → 根据 type 分派：
+    │       ├── join_lobby        → OnConnected + OnJoinedLobby
+    │       ├── leave_lobby       → OnLeftLobby
+    │       ├── create_room       → OnRoomCreated
+    │       ├── join_room         → OnRoomJoined
+    │       ├── leave_room        → OnRoomLeft
+    │       ├── get_room_list     → OnRoomListUpdated
+    │       ├── get_current_room_info → OnRoomDetailInfoReceived
+    │       ├── set_current_room_info → OnRoomInfoUpdated
+    │       └── set_player_info   → OnPlayerInfoUpdated
+    │
+    ├── 尝试解析为 ServerBroadcast（广播）
+    │   └── 根据 event 值分派：
+    │       ├── player_joined             → OnBroadcastReceived
+    │       ├── player_left               → OnBroadcastReceived
+    │       ├── room_properties_updated   → OnBroadcastReceived
+    │       ├── player_properties_updated → OnBroadcastReceived
+    │       └── 其他                      → OnBroadcastReceived
+    │
+    ├── 识别为 pong → 更新心跳确认时间
+    │
+    └── 无法识别 → Debug.LogWarning</div>
+</div>
+
+<hr>
+
+<!-- ====== 8. 协议格式 ====== -->
+<div class="section" id="protocol">
+<h2>8. 协议格式</h2>
+
+<h3>JSON 协议示例</h3>
+<pre><code>// 客户端→服务端：加入大厅
+{
+    "type": "join_lobby",
+    "data": "{\"secret\":\"...\",\"playerName\":\"Player1\",\"playerId\":\"...\"}",
+    "timestamp": 1712345678901
+}
+
+// 服务端→客户端：响应
+{
+    "success": true,
+    "type": "join_lobby",
+    "data": "{\"playerId\":\"abc123...\"}",
+    "error": null,
+    "timestamp": 1712345678902
+}
+
+// 服务端→客户端：广播
+{
+    "type": "broadcast",
+    "event": "player_joined",
+    "roomId": "Room_1234",
+    "data": "{\"playerId\":\"def456...\",\"playerName\":\"Player2\"}"
+}
+
+// 心跳（纯文本，非 JSON）
+客户端 → 服务端: "ping"
+服务端 → 客户端: "pong"</code></pre>
+
+<h3>数据流时序</h3>
+<div class="arch">客户端                             服务端
+  │                                 │
+  ├── ping ──────────────────────►  │
+  │◄── pong ───────────────────────┤
+  │                                 │
+  ├── {"type":"join_lobby",...}──►  │
+  │◄── {"success":true,             │
+  │      "type":"join_lobby"}───────┤
+  │                                 │
+  ├── {"type":"create_room",...}──► │
+  │◄── {"success":true,             │
+  │      "type":"create_room"}──────┤
+  │                                 │
+  │◄── {"type":"broadcast",         │
+  │      "event":"player_joined"}───┤ (其他玩家加入时)
+  │                                 │
+  ├── {"type":"send_game_message",  │
+  │      "data":{...},...}─────────►│
+  │◄── (服务端转发 RPC)─────────────┤</div>
+</div>
+
+<hr>
+
+<!-- ====== 9. 完整使用示例 ====== -->
+<div class="section" id="examples">
+<h2>9. 完整使用示例</h2>
+
+<h3>9.1 基础连接与大厅</h3>
+<pre><code>using UnityEngine;
+using DLMTP_LinkPlay;
+
+public class ConnectionManager : MonoBehaviour
+{
+    public LinkPlayClient client;
+
+    private void Start()
+    {
+        if (client == null)
+            client = gameObject.AddComponent&lt;LinkPlayClient&gt;();
+
+        client.ServerSecret = "your_server_secret";
+        client.PlayerName = "玩家" + Random.Range(1000, 9999);
+
+        client.OnConnected += () => Debug.Log("已连接");
+        client.OnDisconnected += () => Debug.Log("已断开");
+        client.OnError += (err) => Debug.LogError(err);
+        client.OnJoinedLobby += () => Debug.Log("已加入大厅");
+
+        _ = Connect();
+    }
+
+    private async System.Threading.Tasks.Task Connect()
+    {
+        bool ok = await client.ConnectAsync();
+        if (!ok) Debug.LogError("连接失败");
+    }
+
+    private void OnDestroy()
+    {
+        if (client != null) _ = client.DisconnectAsync();
+    }
+}</code></pre>
+
+<h3>9.2 房间管理</h3>
+<pre><code>public class RoomManager : MonoBehaviour
+{
+    public LinkPlayClient client;
+
+    private void Start()
+    {
+        client.OnRoomCreated += (name) => Debug.Log($"房间创建: {name}");
+        client.OnRoomJoined += (name) => {
+            Debug.Log($"加入房间: {name}");
+            _ = client.GetCurrentRoomInfoAsync();
+        };
+        client.OnRoomListUpdated += (rooms) => {
+            foreach (var r in rooms)
+                Debug.Log($"  {r.roomName} ({r.currentPlayerCount}/{r.roomMaxPlayer})");
+        };
+    }
+
+    public async void CreatePublicRoom(string name)
+        => await client.CreateRoomAsync(name, maxPlayers: 10);
+
+    public async void CreatePrivateRoom(string name, string pwd)
+        => await client.CreateRoomAsync(name, maxPlayers: 4,
+            hasPassword: true, password: pwd);
+
+    public async void JoinRoom(string name, string pwd = "")
+        => await client.JoinRoomAsync(name, pwd);
+
+    public async void RefreshRoomList()
+        => await client.GetRoomListAsync();
+}</code></pre>
+
+<h3>9.3 RPC 远程调用</h3>
+<pre><code>public class GameRPC : MonoBehaviour
+{
+    public LinkPlayClient client;
+
+    [LinkPlayRPC]
+    public void StartGame() => Debug.Log("游戏开始！");
+
+    [LinkPlayRPC]
+    public void PlayerScoreUpdate(string playerId, int score, int combo)
+        => Debug.Log($"玩家 {playerId} 得分: {score}");
+
+    [LinkPlayRPC(Name = "SyncHealth")]
+    public void UpdateHealth(string playerId, float health)
+        => Debug.Log($"玩家 {playerId} 生命值: {health}");
+
+    // 调用 RPC
+    public async void OnStartGameClicked()
+        => await client.InvokeRPCAsync("StartGame",
+            targetType: RPCTargetType.AllPlayersInRoom);
+
+    public async void SyncScore(string id, int score)
+        => await client.InvokeRPCAsync("PlayerScoreUpdate",
+            parameters: new object[] { id, score, 0 },
+            targetType: RPCTargetType.Others);
+
+    public async void ReportToOwner(string msg)
+        => await client.InvokeRPCAsync("ReceiveReport",
+            parameters: new object[] { msg },
+            targetType: RPCTargetType.RoomOwner);
+}</code></pre>
+
+<h3>9.4 玩家位置同步</h3>
+<pre><code>public class PlayerSync : MonoBehaviour
+{
+    public LinkPlayClient client;
+    private Vector3 _lastPos;
+    private float _syncInterval = 0.1f;
+    private float _lastSyncTime;
+
+    private void Start()
+    {
+        client = FindFirstObjectByType&lt;LinkPlayClient&gt;();
+        _lastPos = transform.position;
+    }
+
+    private void Update()
+    {
+        if (!client.IsInRoom) return;
+        if (Time.time - _lastSyncTime >= _syncInterval
+            && Vector3.Distance(transform.position, _lastPos) > 0.1f)
+        {
+            _ = SyncPosition();
+            _lastPos = transform.position;
+            _lastSyncTime = Time.time;
+        }
+    }
+
+    private async Task SyncPosition()
+    {
+        var pos = transform.position;
+        var rot = transform.rotation.eulerAngles;
+        await client.InvokeRPCAsync("OnRemoteMove",
+            parameters: new object[] { client.PlayerId,
+                pos.x, pos.y, pos.z, rot.y },
+            targetType: RPCTargetType.Others);
+    }
+
+    [LinkPlayRPC]
+    public void OnRemoteMove(string playerId, float x, float y,
+        float z, float ry)
+    {
+        if (playerId == client.PlayerId) return;
+        var target = GameObject.Find("Player_" + playerId);
+        if (target != null)
+            target.transform.position = Vector3.Lerp(
+                target.transform.position,
+                new Vector3(x, y, z), 0.5f);
+    }
+}</code></pre>
+</div>
+
+<hr>
+
+<!-- ====== 10. 常见问题 ====== -->
+<div class="section" id="faq">
+<h2>10. 常见问题</h2>
+
+<h4>Q: 断线后会自动重连吗？</h4>
+<p>A: 会。AutoReconnect 默认为 true。当 WebSocket 意外断开（非主动调用 DisconnectAsync()）且重连次数未达上限时，会自动尝试重连。可配置 MaxReconnectAttempts（最大重连次数，-1 为无限）和 ReconnectDelay（重连间隔秒数）。</p>
+
+<h4>Q: RPC 方法的参数有什么限制？</h4>
+<p>A: 参数必须是 JSON 可序列化的类型：支持 int、float、double、long、bool、string、Dictionary&lt;string, object&gt;。不支持 GameObject、Transform 等 Unity 特有类型，以及未标记 [Serializable] 的自定义类。</p>
+
+<h4>Q: RPC 方法可以是非 public 的吗？</h4>
+<p>A: 可以。DispatchRPCMethod 使用反射查找，支持 public、private、protected 方法。</p>
+
+<h4>Q: 如何在 RPC 中传递复杂数据？</h4>
+<p>A: 使用 Dictionary&lt;string, object&gt;：</p>
+<pre><code>var data = new Dictionary&lt;string, object&gt; {
+    ["playerId"] = "abc123",
+    ["position"] = new float[] { 1.0f, 2.0f, 3.0f },
+    ["items"] = new int[] { 101, 202, 303 }
+};
+await client.InvokeRPCAsync("OnPlayerData", new object[] { data });
+
+[LinkPlayRPC]
+public void OnPlayerData(Dictionary&lt;string, object&gt; data) { /* ... */ }</code></pre>
+
+<h4>Q: 心跳间隔可以修改吗？</h4>
+<p>A: 可以。在 Inspector 中修改 HeartbeatInterval（默认 30 秒）和 HeartbeatTimeout（默认 60 秒），或在代码中：<code>client.HeartbeatInterval = 15f;</code></p>
+
+<h4>Q: 如何在 Unity 编辑器中测试联机？</h4>
+<p>A: 1) 启动服务端程序 (DLMTP_LinkPlay_Socket_Server)；2) 在 Unity 中配置 ServerUrl 为 ws://localhost:8080；3) 运行 Unity 场景，启动多个实例进行测试。</p>
+
+<h4>Q: OnBroadcastReceived 和具体事件有什么区别？</h4>
+<p>A: OnBroadcastReceived 是通用广播通道，接收所有服务端推送事件（玩家加入/离开、属性变更等）。OnRoomDetailInfoReceived 是特定响应通道，仅在调用 GetCurrentRoomInfoAsync() 后触发。建议：处理玩家加入/离开等广播用 OnBroadcastReceived；显示房间详情列表用 OnRoomDetailInfoReceived。</p>
+
+<h4>Q: ServerUrl 是如何确定的？</h4>
+<p>A: ServerUrl 是一个属性，根据 GameInfo.Instance.gameLinkPlayServerType 自动选择 Main 或 Localhost URL 地址。如需手动覆盖，直接赋值即可。</p>
+</div>
+
+<div class="site-footer">
+    <a href="https://github.com/your-repo/DLMTP_LinkPlay" target="_blank">View on GitHub</a>
+    &middot; <a href="https://github.com/your-repo/DLMTP_LinkPlay/issues" target="_blank">问题反馈</a>
+    &middot; 文档版本 v2.0 &middot; 最后更新 2026-05-17
+</div>
+</div></div>
+<script>
+document.addEventListener("DOMContentLoaded",function(){
+var links=document.querySelectorAll(".sb-nav a");
+var sections=document.querySelectorAll(".section");
+var observer=new IntersectionObserver(function(entries){
+entries.forEach(function(entry){
+if(entry.isIntersecting){
+links.forEach(function(a){a.classList.remove("active")});
+var id=entry.target.id;
+var active=document.querySelector('.sb-nav a[href="#'+id+'"]');
+if(active)active.classList.add("active");
+}
+});
+},{rootMargin:"-40px 0px -60% 0px"});
+sections.forEach(function(s){observer.observe(s)});
+links.forEach(function(a){
+a.addEventListener("click",function(e){
+e.preventDefault();
+var target=document.querySelector(this.getAttribute("href"));
+if(target)target.scrollIntoView({behavior:"smooth"});
+});
+});
+});
+</script>
+</body>
+</html>

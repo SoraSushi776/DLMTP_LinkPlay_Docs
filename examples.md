@@ -11,6 +11,7 @@ nav_order: 9
 ```csharp
 using UnityEngine;
 using DLMTP_LinkPlay;
+using DLMTP_LinkPlay.CoreSDK;
 
 public class ConnectionManager : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class ConnectionManager : MonoBehaviour
 ```csharp
 using UnityEngine;
 using DLMTP_LinkPlay;
+using DLMTP_LinkPlay.CoreSDK;
 using System.Collections.Generic;
 
 public class RoomManager : MonoBehaviour
@@ -152,6 +154,7 @@ public class RoomManager : MonoBehaviour
 ```csharp
 using UnityEngine;
 using DLMTP_LinkPlay;
+using DLMTP_LinkPlay.CoreSDK;
 
 public class GameRPC : MonoBehaviour
 {
@@ -222,6 +225,7 @@ public class GameRPC : MonoBehaviour
 ```csharp
 using UnityEngine;
 using DLMTP_LinkPlay;
+using DLMTP_LinkPlay.CoreSDK;
 
 public class PlayerSync : MonoBehaviour
 {

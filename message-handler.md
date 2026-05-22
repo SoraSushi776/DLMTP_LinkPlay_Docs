@@ -34,7 +34,7 @@ nav_order: 7
     │       ├── player_properties_updated → OnBroadcastReceived("player_properties_updated", data)
     │       └── 其他                      → OnBroadcastReceived(event, data)
     │
-    ├── 识别为 pong → 更新心跳确认时间
+    ├── 识别为 pong → 更新心跳确认时间 + 计算 RTT 更新 CurrentPingMs + 触发 OnPingUpdated
     │
     └── 无法识别 → Debug.LogWarning
 ```

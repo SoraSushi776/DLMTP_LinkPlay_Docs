@@ -7,7 +7,7 @@ nav_order: 1
 # DLMTP_LinkPlay SDK Wiki
 
 > **命名空间：** `DLMTP_LinkPlay`
-> **核心依赖：** `UnityEngine`、`System.Net.WebSockets`
+> **核心依赖：** `UnityEngine`、`websocket-sharp`
 > **服务端对接：** [DLMTP_LinkPlay_Socket_Server](https://github.com/your-repo)
 > **文档版本：** v2.0 | **最后更新：** 2026-05-17
 
@@ -21,7 +21,7 @@ nav_order: 1
 
 | 特性 | 说明 |
 |------|------|
-| ✅ WebSocket 连接管理 | 基于 `ClientWebSocket` 的异步连接 |
+| ✅ WebSocket 连接管理 | 基于 `websocket-sharp` 的异步连接（SSL 绕过支持） |
 | ✅ 大厅 + 房间系统 | 支持创建/加入/离开房间，密码保护 |
 | ✅ RPC 远程调用 | 4 种广播目标：全部、房主、非房主、除自己外 |
 | ✅ 事件回调系统 | 全异步操作均有对应事件通知 |
@@ -66,6 +66,7 @@ nav_order: 1
 - [协议格式](protocol.md) — WebSocket 通信协议与数据流
 - [完整使用示例](examples.md) — 连接、房间、RPC、位置同步示例
 - [常见问题](faq.md) — FAQ 与调试技巧
+- [Game 组件](game-components.md) — LinkPlayContent 大厅入口 + PingDisplay 延迟显示
 
 ---
 

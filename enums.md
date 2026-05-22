@@ -29,6 +29,8 @@ RPC 远程调用的广播目标类型。
 | `NonOwnerPlayers` | **所有非房主玩家** | 游戏状态同步、通知 |
 | `Others` | **除自己外的其他玩家** | 玩家动作同步（移动、攻击等） |
 
+> **注意：** `ServerMessageType`、`ServerErrorCode`、`BroadcastEvent` 均为 `internal` 类，仅供 SDK 内部使用。此处列出仅供参考和调试。
+
 ## 3.3 ServerMessageType
 
 与服务端约定的消息类型字符串常量。
