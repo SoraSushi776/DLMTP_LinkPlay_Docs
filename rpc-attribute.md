@@ -1,8 +1,4 @@
----
-layout: default
-title: RPC 属性
-nav_order: 4
----
+
 
 # 4. RPC 属性（LinkPlayRPC）
 
@@ -30,6 +26,4 @@ public class LinkPlayRPC : Attribute
 - ✅ 参数支持：`int`、`float`、`double`、`long`、`bool`、`string`、`Dictionary<string, object>`
 - ❌ 不支持：`GameObject`、`Transform` 等 Unity 特有类型
 
----
 
-[← 枚举与常量](enums.md) | [下一章：数据模型 →](data-models.md)

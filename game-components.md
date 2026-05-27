@@ -1,8 +1,4 @@
----
-layout: default
-title: Game 组件
-nav_order: 11
----
+
 
 # 11. Game 组件（LinkPlayContent / PingDisplay）
 
@@ -93,6 +89,4 @@ OnGUI() → 绘制半透明背景 + 延迟文本（根据值着色）
 
 每帧在 `OnGUI` 中绘制，使用 `Texture2D` 作为半透明背景，文本右对齐显示。
 
----
 
-[← 常见问题](faq.md) | [返回首页](index.md)

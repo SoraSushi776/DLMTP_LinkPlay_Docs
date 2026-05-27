@@ -1,8 +1,4 @@
----
-layout: default
-title: 协议格式
-nav_order: 8
----
+
 
 # 8. 协议格式说明
 
@@ -69,6 +65,4 @@ nav_order: 8
   │                                 │
 ```
 
----
 
-[← 消息处理器](message-handler.md) | [下一章：完整使用示例 →](examples.md)

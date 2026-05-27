@@ -1,0 +1,89 @@
+/* =====================================
+   DLMTP_LinkPlay Docs - 自定义样式
+   ===================================== */
+
+/* 侧边栏 - 分组标题样式 */
+.sidebar-nav > ul > li > strong {
+  display: block;
+  padding: 8px 15px 4px;
+  font-size: 14px;
+  color: #42b983;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 侧边栏 - 一级菜单缩进 */
+.sidebar-nav ul li {
+  list-style: none;
+}
+
+.sidebar-nav ul li ul {
+  padding-left: 16px;
+}
+
+/* 封面 - 标题样式 */
+.cover-main h1 {
+  font-size: 3.2rem;
+  color: #2c3e50;
+}
+
+.cover-main p {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}
+
+/* 代码块 - 优化样式 */
+.markdown-section pre {
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+}
+
+.markdown-section code {
+  font-size: 13px;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+}
+
+/* 表格 - 美化 */
+.markdown-section table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown-section table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-section table th {
+  background-color: #42b983;
+  color: white;
+  font-weight: 600;
+  padding: 10px 12px;
+}
+
+.markdown-section table td {
+  padding: 8px 12px;
+}
+
+/* 徽章/标注样式 */
+.markdown-section blockquote {
+  border-left: 4px solid #42b983;
+  background-color: #f0faf4;
+  padding: 12px 16px;
+  border-radius: 0 4px 4px 0;
+}
+
+/* 标题锚点 */
+.markdown-section h2 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.markdown-section h3 {
+  margin-top: 28px;
+}
+
+/* 进度条 */
+.progress {
+  background-color: #42b983;
+}

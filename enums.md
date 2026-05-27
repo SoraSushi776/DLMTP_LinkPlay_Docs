@@ -1,8 +1,4 @@
----
-layout: default
-title: 枚举与常量
-nav_order: 3
----
+
 
 # 3. 枚举与常量（LinkPlayEnums）
 
@@ -81,6 +77,4 @@ RPC 远程调用的广播目标类型。
 | `GameStart` | `"game_start"` | 游戏开始（预留） |
 | `GameEnd` | `"game_end"` | 游戏结束（预留） |
 
----
 
-[← 文件结构](getting-started.md) | [下一章：RPC 属性 →](rpc-attribute.md)

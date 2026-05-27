@@ -1,8 +1,4 @@
----
-layout: default
-title: 数据模型
-nav_order: 5
----
+
 
 # 5. 数据模型（LinkPlayModels）
 
@@ -288,6 +284,4 @@ RPC 调用数据（嵌入 `GameMessageData.payload` 中）。
 
 **限制：** 反序列化仅支持**扁平的 key:value** 结构，不支持嵌套对象。
 
----
 
-[← RPC 属性](rpc-attribute.md) | [下一章：核心客户端 →](client.md)

@@ -1,8 +1,4 @@
----
-layout: default
-title: 常见问题
-nav_order: 10
----
+
 
 # 10. 常见问题
 
@@ -111,6 +107,4 @@ A: `Instance` 是一个静态单例，由第一个挂载了 `LinkPlayClient` 的
 var client = LinkPlayClient.Instance;
 ```
 
----
 
-[← 完整使用示例](examples.md) | [下一章：Game 组件 →](game-components.md)

@@ -1,8 +1,4 @@
----
-layout: default
-title: 核心客户端
-nav_order: 6
----
+
 
 # 6. 核心客户端（LinkPlayClient）
 
@@ -349,6 +345,4 @@ WebSocket 线程 → InvokeOnMainThread() → _mainThreadActions 队列 → Upda
 
 由于 websocket-sharp 的 `Send()` 不能在 `OnOpen` 回调线程中调用，所以 `OnOpen` 只设置 `_pendingJoinLobby = true`，由 `Update()` 在主线程检查标记后调用 `SendJoinLobby()`。
 
----
 
-[← 数据模型](data-models.md) | [下一章：消息处理器 →](message-handler.md)

@@ -1,8 +1,4 @@
----
-layout: default
-title: DLMTP_LinkPlay SDK Wiki
-nav_order: 1
----
+
 
 # DLMTP_LinkPlay SDK Wiki
 
@@ -57,16 +53,23 @@ nav_order: 1
 
 ## 📑 文档导航
 
+### 快速入门
 - [文件结构](getting-started.md) — 项目文件组织与快速入门
+
+### API 参考
 - [枚举与常量](enums.md) — 所有枚举、消息类型、错误码和广播事件
 - [RPC 属性](rpc-attribute.md) — `[LinkPlayRPC]` 远程调用标记详解
 - [数据模型](data-models.md) — 网络协议、房间、玩家等数据模型
 - [核心客户端](client.md) — `LinkPlayClient` 完整 API 参考
 - [消息处理器](message-handler.md) — 内部消息解析与事件派发
+
+### 协议与示例
 - [协议格式](protocol.md) — WebSocket 通信协议与数据流
 - [完整使用示例](examples.md) — 连接、房间、RPC、位置同步示例
-- [常见问题](faq.md) — FAQ 与调试技巧
 - [Game 组件](game-components.md) — LinkPlayContent 大厅入口 + PingDisplay 延迟显示
+
+### 其他
+- [常见问题](faq.md) — FAQ 与调试技巧
 
 ---
 

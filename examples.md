@@ -1,8 +1,4 @@
----
-layout: default
-title: 完整使用示例
-nav_order: 9
----
+
 
 # 9. 完整使用示例
 
@@ -282,6 +278,4 @@ public class PlayerSync : MonoBehaviour
 }
 ```
 
----
 
-[← 协议格式](protocol.md) | [下一章：常见问题 →](faq.md)

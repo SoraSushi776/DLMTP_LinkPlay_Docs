@@ -1,8 +1,4 @@
----
-layout: default
-title: 消息处理器
-nav_order: 7
----
+
 
 # 7. 消息处理器（LinkPlayMessageHandler）
 
@@ -39,6 +35,4 @@ nav_order: 7
     └── 无法识别 → Debug.LogWarning
 ```
 
----
 
-[← 核心客户端](client.md) | [下一章：协议格式 →](protocol.md)
